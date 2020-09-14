@@ -6,15 +6,11 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/09/14 05:27:00 by yberries         ###   ########.fr       */
+/*   Updated: 2020/09/14 06:41:45 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include "libft/libft.h"
 
 char	***get_d(void)
@@ -60,13 +56,10 @@ void	time2fdf(char *str, char ***digits)
 				{
 						while (++i < 9)
 						{
-								if (flag < 9)
-								{
-										clock[i] = ft_strnew(50);
-										++flag;
-								}
+								if (++flag < 9)
+										clock[i] = ft_strnew(57);
 								tmp = ft_strdup(digits[n][i]);
-								clock[i] = ft_strjoin(clock[i], tmp);
+								clock[i] = ft_strcat(clock[i], tmp);
 								free(tmp);
 						}
 				}
@@ -75,7 +68,7 @@ void	time2fdf(char *str, char ***digits)
 						while (++i < 9)
 						{
 								tmp = ft_strdup(digits[10][i]);
-								clock[i] = ft_strjoin(clock[i], tmp);
+								clock[i] = ft_strcat(clock[i], tmp);
 								free(tmp);
 						}
 				}
@@ -85,8 +78,10 @@ void	time2fdf(char *str, char ***digits)
 		while (++i < 9)
 		{
 				ft_putstr(clock[i]);
+				free(clock[i]);
 				ft_putstr("\n");
 		}
+		free(clock);
 }
 
 int		main()
@@ -103,13 +98,12 @@ int		main()
 				i = time(NULL);
 				if (j < i)
 				{
+						system("clear");
 						j = i;
 						str = ctime(&i);
 						while (*str != ':')
 								++str;
 						str -= 2;
-						//	write(1, str, 8);
-						//	ft_putstr("\n");
 						time2fdf(str, digits);
 				}
 		}
