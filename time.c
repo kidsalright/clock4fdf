@@ -6,12 +6,16 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/09/14 06:41:45 by yberries         ###   ########.fr       */
+/*   Updated: 2020/09/18 02:54:06 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <time.h>
 #include "libft/libft.h"
+#include <stdio.h>
+
+#define	CYN	"\x1B[36m"
+#define MAG	"\x1B[35m"
 
 char	***get_d(void)
 {
@@ -45,6 +49,7 @@ void	time2fdf(char *str, char ***digits)
 		char	**clock;
 		char	*tmp;
 		int		flag;
+		int		j;
 
 		flag = -1;
 		clock = (char **)malloc(sizeof(char *) * 9);
@@ -75,12 +80,30 @@ void	time2fdf(char *str, char ***digits)
 				*++str;
 		}
 		i = -1;
+		ft_putstr(CYN);
+		while (++i < 56)
+				ft_putchar('0');
+		ft_putchar('\n');
+		i = -1;
 		while (++i < 9)
 		{
-				ft_putstr(clock[i]);
+				j = -1;
+				while (++j < 57)
+				{
+						if (clock[i][j] == '0')
+								ft_putstr(CYN);
+						else
+								ft_putstr(MAG);
+						ft_putchar(clock[i][j]);
+				}
 				free(clock[i]);
 				ft_putstr("\n");
 		}
+		i = -1;
+		ft_putstr(CYN);
+		while (++i < 56)
+				ft_putchar('0');
+		ft_putchar('\n');
 		free(clock);
 }
 
