@@ -6,7 +6,7 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/09/25 16:04:56 by yberries         ###   ########.fr       */
+/*   Updated: 2020/09/25 18:02:11 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,66 +17,85 @@
 #define	CYN	"\x1B[36m"
 #define MAG	"\x1B[35m"
 
-
-void print_char(char c)
+void	chars2fdf(char *str, char ***chars)
 {
-		c = ft_toupper(c);
-		if (c == 'A')
-				ft_printf("..######..\n..#....#..\n..######..\n..#....#..\n..#....#..\n\n");
-		else if (c == 'B')
-				ft_printf("..######..\n..#....#..\n..#####...\n..#....#..\n..######..\n\n");
-		else if (c == 'C')
-				ft_printf("..######..\n..#.......\n..#.......\n..#.......\n..######..\n\n");
-		else if (c == 'D')
-				ft_printf("..#####...\n..#....#..\n..#....#..\n..#....#..\n..#####...\n\n");
-		else if (c == 'E')
-				ft_printf("..######..\n..#.......\n..#####...\n..#.......\n..######..\n\n");
-		else if (c == 'F')
-				ft_printf("..######..\n..#.......\n..#####...\n..#.......\n..#.......\n\n");
-		else if (c == 'G')
-				ft_printf("..######..\n..#.......\n..#####...\n..#....#..\n..#####...\n\n");
-		else if (c == 'H')
-				ft_printf("..#....#..\n..#....#..\n..######..\n..#....#..\n..#....#..\n\n");
-		else if (c == 'I')
-				ft_printf("..######..\n....##....\n....##....\n....##....\n..######..\n\n");
-		else if (c == 'J')
-				ft_printf("..######..\n....##....\n....##....\n..#.##....\n..####....\n\n");
-		else if (c == 'K')
-				ft_printf("..#...#...\n..#..#....\n..##......\n..#..#....\n..#...#...\n\n");
-		else if (c == 'L')
-				ft_printf("..#.......\n..#.......\n..#.......\n..#.......\n..######..\n\n");
-		else if (c == 'M')
-				ft_printf("..#....#..\n..##..##..\n..#.##.#..\n..#....#..\n..#....#..\n\n");
-		else if (c == 'N')
-				ft_printf("..#....#..\n..##...#..\n..#.#..#..\n..#..#.#..\n..#...##..\n\n");
-		else if (c == 'O')
-				ft_printf("..######..\n..#....#..\n..#....#..\n..#....#..\n..######..\n\n");
-		else if (c == 'P')
-				ft_printf("..######..\n..#....#..\n..######..\n..#.......\n..#.......\n\n");
-		else if (c == 'Q')
-				ft_printf("..######..\n..#....#..\n..#.#..#..\n..#..#.#..\n..######..\n\n");
-		else if (c == 'R')
-				ft_printf("..######..\n..#....#..\n..#.##...\n..#...#...\n..#....#..\n\n");
-		else if (c == 'S')
-				ft_printf("..######..\n..#.......\n..######..\n.......#..\n..######..\n\n");
-		else if (c == 'T')
-				ft_printf("..######..\n....##....\n....##....\n....##....\n....##....\n\n");
-		else if (c == 'U')
-				ft_printf("..#....#..\n..#....#..\n..#....#..\n..#....#..\n..######..\n\n");
-		else if (c == 'V')
-				ft_printf("..#....#..\n..#....#..\n..#....#..\n...#..#...\n....##....\n\n");
-		else if (c == 'W')
-				ft_printf("..#....#..\n..#....#..\n..#.##.#..\n..##..##..\n..#....#..\n\n");
-		else if (c == 'X')
-				ft_printf("..#....#..\n...#..#...\n....##....\n...#..#...\n..#....#..\n\n");
-		else if (c == 'Y')
-				ft_printf("..#....#..\n...#..#...\n....##....\n....##....\n....##....\n\n");
-		else if (c == 'Z')
-				ft_printf("..######..\n......#...\n.....#....\n....#.....\n..######..\n\n");
-		else if (c == ' ')
-				ft_printf("..........\n..........\n..........\n..........\n\n");
-		else if (c == '.')
-				ft_printf("----..----\n\n");
+		int		i;
+		int		j;
+		int		l;
+		int		flag;
+		char	*tmp;
+		char	**res;
+		int		heh;
+
+		flag = -1;
+		j = 0;
+		l = ft_strlen(str);
+		res = (char **)malloc(sizeof(char *) * l * 5);
+		while (l > 0)
+		{
+				i = -1;
+				heh = str[j] - 'a';
+				if (heh >= 0 && heh <= 25)
+				{
+						while (++i < 5)
+						{
+								if (++flag < 5)
+										res[i] = ft_strnew(l * 10);
+								tmp = ft_strdup(chars[heh][i]);
+								res[i] = ft_strcat(res[i], tmp);
+								free(tmp);
+						}
+				}
+				else
+				{
+						while(++i < 5)
+						{
+								tmp = ft_strdup(chars[26][i]);
+								res[i] = ft_strcat(res[i], tmp);
+								free(tmp);
+						}
+				}
+				++j;
+				--l;
+		}
+		i = -1;
+		l = ft_strlen(str);
+		while (++i < 5)
+		{
+				j = -1;
+				while (++j < (l * 10))
+				{
+						ft_putstr(MAG);
+						ft_putchar(res[i][j]);
+				}
+				free(res[i]);
+				ft_putstr("\n");
+		}
+}
+
+char	***get_char(void)
+{
+		char	*line;
+		int		fd;
+		int		i;
+		int		j;
+		char	***arr;
+
+		i = -1;
+		fd = open("chars.txt", O_RDONLY);
+		arr = (char ***)malloc(sizeof(char **) * 27);
+		while (++i < 27)
+		{
+				arr[i] = (char **)malloc(sizeof(char *) * 5);
+				j = -1;
+				while (++j < 5 && get_next_line(fd, &line))
+				{
+						arr[i][j] = ft_strdup(line);
+						free(line);
+				}
+		}
+		close(fd);
+		return (arr);
 }
 
 char	***get_d(void)
@@ -175,6 +194,7 @@ int		main(int ac, char **av)
 		long int	j;
 		char		*str;
 		char		***digits;
+		char		***chars;
 
 		if (ac == 2 && av[1][0] == 't')
 		{
@@ -197,13 +217,12 @@ int		main(int ac, char **av)
 		}
 		else
 		{
+				chars = get_char();
 				while (1)
 				{
 						while (get_next_line(0, &str))
 						{
-								i = 0;
-								while(str[i])
-									print_char(str[i++]);
+								chars2fdf(str, chars);
 								ft_strdel(&str);
 						}
 				}
