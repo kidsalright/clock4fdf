@@ -6,7 +6,7 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/09/25 18:02:11 by yberries         ###   ########.fr       */
+/*   Updated: 2020/09/25 18:50:14 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	chars2fdf(char *str, char ***chars)
 				{
 						while(++i < 5)
 						{
+								if (++flag < 5)
+										res[i] = ft_strnew(l * 10);
 								tmp = ft_strdup(chars[26][i]);
 								res[i] = ft_strcat(res[i], tmp);
 								free(tmp);
@@ -195,6 +197,8 @@ int		main(int ac, char **av)
 		char		*str;
 		char		***digits;
 		char		***chars;
+		int			fd;
+		int			flag;
 
 		if (ac == 2 && av[1][0] == 't')
 		{
@@ -218,11 +222,22 @@ int		main(int ac, char **av)
 		else
 		{
 				chars = get_char();
+				flag = 4;
 				while (1)
 				{
+						fd = open("hello.c", O_WRONLY | O_APPEND | O_CREAT, 0644);
 						while (get_next_line(0, &str))
 						{
+								if (str[0] == ':' && str[1] == 'q')
+								{
+										system("gcc hello.c -o hello");
+										ft_strdel(&str);
+										exit (0);
+								}
+								ft_putstr_fd(str, fd);
+								ft_putstr_fd("\n", fd);
 								chars2fdf(str, chars);
+								--flag;
 								ft_strdel(&str);
 						}
 				}
