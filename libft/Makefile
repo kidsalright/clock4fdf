@@ -6,16 +6,14 @@
 #    By: yberries <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 17:04:49 by yberries          #+#    #+#              #
-#    Updated: 2020/01/28 06:18:34 by yberries         ###   ########.fr        #
+#    Updated: 2020/09/22 23:38:04 by yberries         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 FLAGS = -Wall -Wextra -Werror
-
 INCLUDES = /
-
 SRC = ft_memset.c \
 	  ft_bzero.c \
 	  ft_memcpy.c \
@@ -82,22 +80,41 @@ SRC = ft_memset.c \
 	  ft_realloc.c \
 	  btree_create_node.c \
 	  btree_insert_data.c \
-	  get_next_line.c
+	  get_next_line.c \
+	  ft_nbrlen.c
 
 OBJ = $(SRC:.c=.o)
+PFT = ft_printf/
+PFT_OBJ = $(PFT)/obj/*
+
+S_CLN = \033[K
+C_RED = \033[31m
+C_GRN = \033[32m
+C_CYAN = \033[36m
+
 
 all: $(NAME)
 
-$(NAME):
-		@gcc $(FLAGS) -c $(SRC) -I $(INCLUDES)
-		@ar rc $(NAME) $(OBJ)
-		@ranlib $(NAME)
+%.o: %.c
+	@printf "\r$(S_CLN)$(C_CYAN)Assembling $< > $@"
+	@gcc $(FLAGS) -c -o $@ $<
+
+$(NAME): $(OBJ)
+	@printf "\r$(S_CLN)$(C_GRN)Libft compiled\n"
+	@make -sC $(PFT)
+#	@printf "\r$(S_CLN)$(C_GRN)Ft_printf compiled\n"
+	@ar rc $(NAME) $(OBJ) $(PFT_OBJ)
+	@ranlib $(NAME)
+	@printf "\r$(R_CLEAN)$(C_GRN)Libft built\n"
 
 clean:
-		@rm -rf $(OBJ)
+	@make -sC $(PFT) clean
+	@printf "$(C_RED)Remove libft *.o\n"
+	@rm -rf $(OBJ)
 
 fclean: clean
-		@rm -rf $(NAME)
+	@printf "$(C_RED)Remove libft.a\n"
+	@rm -rf $(NAME)
 
 re: fclean all
 

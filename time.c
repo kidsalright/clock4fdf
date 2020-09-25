@@ -6,16 +6,78 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/09/18 02:54:06 by yberries         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:04:56 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <time.h>
 #include "libft/libft.h"
-#include <stdio.h>
+#include <curses.h>
 
 #define	CYN	"\x1B[36m"
 #define MAG	"\x1B[35m"
+
+
+void print_char(char c)
+{
+		c = ft_toupper(c);
+		if (c == 'A')
+				ft_printf("..######..\n..#....#..\n..######..\n..#....#..\n..#....#..\n\n");
+		else if (c == 'B')
+				ft_printf("..######..\n..#....#..\n..#####...\n..#....#..\n..######..\n\n");
+		else if (c == 'C')
+				ft_printf("..######..\n..#.......\n..#.......\n..#.......\n..######..\n\n");
+		else if (c == 'D')
+				ft_printf("..#####...\n..#....#..\n..#....#..\n..#....#..\n..#####...\n\n");
+		else if (c == 'E')
+				ft_printf("..######..\n..#.......\n..#####...\n..#.......\n..######..\n\n");
+		else if (c == 'F')
+				ft_printf("..######..\n..#.......\n..#####...\n..#.......\n..#.......\n\n");
+		else if (c == 'G')
+				ft_printf("..######..\n..#.......\n..#####...\n..#....#..\n..#####...\n\n");
+		else if (c == 'H')
+				ft_printf("..#....#..\n..#....#..\n..######..\n..#....#..\n..#....#..\n\n");
+		else if (c == 'I')
+				ft_printf("..######..\n....##....\n....##....\n....##....\n..######..\n\n");
+		else if (c == 'J')
+				ft_printf("..######..\n....##....\n....##....\n..#.##....\n..####....\n\n");
+		else if (c == 'K')
+				ft_printf("..#...#...\n..#..#....\n..##......\n..#..#....\n..#...#...\n\n");
+		else if (c == 'L')
+				ft_printf("..#.......\n..#.......\n..#.......\n..#.......\n..######..\n\n");
+		else if (c == 'M')
+				ft_printf("..#....#..\n..##..##..\n..#.##.#..\n..#....#..\n..#....#..\n\n");
+		else if (c == 'N')
+				ft_printf("..#....#..\n..##...#..\n..#.#..#..\n..#..#.#..\n..#...##..\n\n");
+		else if (c == 'O')
+				ft_printf("..######..\n..#....#..\n..#....#..\n..#....#..\n..######..\n\n");
+		else if (c == 'P')
+				ft_printf("..######..\n..#....#..\n..######..\n..#.......\n..#.......\n\n");
+		else if (c == 'Q')
+				ft_printf("..######..\n..#....#..\n..#.#..#..\n..#..#.#..\n..######..\n\n");
+		else if (c == 'R')
+				ft_printf("..######..\n..#....#..\n..#.##...\n..#...#...\n..#....#..\n\n");
+		else if (c == 'S')
+				ft_printf("..######..\n..#.......\n..######..\n.......#..\n..######..\n\n");
+		else if (c == 'T')
+				ft_printf("..######..\n....##....\n....##....\n....##....\n....##....\n\n");
+		else if (c == 'U')
+				ft_printf("..#....#..\n..#....#..\n..#....#..\n..#....#..\n..######..\n\n");
+		else if (c == 'V')
+				ft_printf("..#....#..\n..#....#..\n..#....#..\n...#..#...\n....##....\n\n");
+		else if (c == 'W')
+				ft_printf("..#....#..\n..#....#..\n..#.##.#..\n..##..##..\n..#....#..\n\n");
+		else if (c == 'X')
+				ft_printf("..#....#..\n...#..#...\n....##....\n...#..#...\n..#....#..\n\n");
+		else if (c == 'Y')
+				ft_printf("..#....#..\n...#..#...\n....##....\n....##....\n....##....\n\n");
+		else if (c == 'Z')
+				ft_printf("..######..\n......#...\n.....#....\n....#.....\n..######..\n\n");
+		else if (c == ' ')
+				ft_printf("..........\n..........\n..........\n..........\n\n");
+		else if (c == '.')
+				ft_printf("----..----\n\n");
+}
 
 char	***get_d(void)
 {
@@ -107,27 +169,43 @@ void	time2fdf(char *str, char ***digits)
 		free(clock);
 }
 
-int		main()
+int		main(int ac, char **av)
 {
 		long int	i;
 		long int	j;
 		char		*str;
 		char		***digits;
 
-		j = 0;
-		digits = get_d();
-		while (1)
+		if (ac == 2 && av[1][0] == 't')
 		{
-				i = time(NULL);
-				if (j < i)
+				j = 0;
+				digits = get_d();
+				while (1)
 				{
-						system("clear");
-						j = i;
-						str = ctime(&i);
-						while (*str != ':')
-								++str;
-						str -= 2;
-						time2fdf(str, digits);
+						i = time(NULL);
+						if (j < i)
+						{
+								system("clear");
+								j = i;
+								str = ctime(&i);
+								while (*str != ':')
+										++str;
+								str -= 2;
+								time2fdf(str, digits);
+						}
+				}
+		}
+		else
+		{
+				while (1)
+				{
+						while (get_next_line(0, &str))
+						{
+								i = 0;
+								while(str[i])
+									print_char(str[i++]);
+								ft_strdel(&str);
+						}
 				}
 		}
 		return (0);
