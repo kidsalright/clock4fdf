@@ -6,7 +6,7 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/09/25 18:50:14 by yberries         ###   ########.fr       */
+/*   Updated: 2020/10/09 03:43:07 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	time2fdf(char *str, char ***digits)
 		}
 		i = -1;
 		ft_putstr(CYN);
-		while (++i < 56)
+		while (++i < 57)
 				ft_putchar('0');
 		ft_putchar('\n');
 		i = -1;
@@ -173,18 +173,25 @@ void	time2fdf(char *str, char ***digits)
 				j = -1;
 				while (++j < 57)
 				{
+						if (j == 56)
+						{
+								ft_putstr(CYN);
+								ft_putchar('0');
+								break;
+						}
 						if (clock[i][j] == '0')
 								ft_putstr(CYN);
 						else
 								ft_putstr(MAG);
-						ft_putchar(clock[i][j]);
+						if (clock[i][j] != '\n' || clock[i][j] != '\0')
+								ft_putchar(clock[i][j]);
 				}
 				free(clock[i]);
-				ft_putstr("\n");
+				ft_putchar('\n');
 		}
 		i = -1;
 		ft_putstr(CYN);
-		while (++i < 56)
+		while (++i < 57)
 				ft_putchar('0');
 		ft_putchar('\n');
 		free(clock);
