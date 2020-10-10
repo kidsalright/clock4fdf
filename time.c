@@ -6,7 +6,7 @@
 /*   By: yberries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 18:58:12 by yberries          #+#    #+#             */
-/*   Updated: 2020/10/09 03:43:07 by yberries         ###   ########.fr       */
+/*   Updated: 2020/10/10 22:56:22 by yberries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ int		main(int ac, char **av)
 {
 		long int	i;
 		long int	j;
+		int			k;
 		char		*str;
 		char		***digits;
 		char		***chars;
@@ -216,13 +217,16 @@ int		main(int ac, char **av)
 						i = time(NULL);
 						if (j < i)
 						{
-								system("clear");
+								k = 12;
 								j = i;
 								str = ctime(&i);
 								while (*str != ':')
 										++str;
 								str -= 2;
 								time2fdf(str, digits);
+								system("sleep 1");
+								while (--k)
+										ft_printf("\033[A\33[2K\r");
 						}
 				}
 		}
